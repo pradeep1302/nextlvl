@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import Image from "next/image";
 import styles from "./write.module.css";
 import { useEffect, useState } from "react";
@@ -13,7 +12,9 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { app } from "@/utils/firebase";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Write = () => {
   const { status } = useSession();
@@ -28,7 +29,7 @@ const Write = () => {
 
   useEffect(() => {
     const storage = getStorage(app);
-    const upload = () => {
+    const upload = async() => {
       const name = new Date().getTime() + file.name;
       const storageRef = ref(storage, name);
 
